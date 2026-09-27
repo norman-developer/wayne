@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Редактор открытки</title>
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link" title="Открыть сайт">←</a>
+  <h1>Редактор открытки</h1>
+  <input type="password" id="f-adminPassword" class="password-input" placeholder="пароль редактора" autocomplete="current-password">
+  <span class="save-pill" id="savePill">✓ сохранено</span>
+</div>
+
+<div class="layout">
+  <div class="form-col">
+
+    <!-- Кому -->
+    <div class="card">
+      <h2>Кому</h2>
+      <p class="hint">Имя получателя — подставляется на конверт и в текст письма.</p>
+      <label>Имя</label>
+      <input type="text" id="f-recipient">
+    </div>
+
+    <!-- Первый экран -->
+    <div class="card">
+      <h2>Первый экран</h2>
+      <p class="hint">Первое, что человек увидит, — две строки по центру тёмного экрана.</p>
+      <div class="two-col">
+        <div><label>Строка 1 (курсивом)</label><input type="text" id="f-intro1"></div>
+        <div><label>Строка 2 (жирным)</label><input type="text" id="f-intro2"></div>
+      </div>
+      <label>Подсказка на конверте</label>
+      <input type="text" id="f-envhint">
+    </div>
+
+    <!-- Текст письма -->
+    <div class="card">
+      <h2>Текст письма</h2>
+      <p class="hint">То, что получатель прочитает, открыв конверт.</p>
+      <label>Шапка письма</label>
+      <input type="text" id="f-kicker">
+      <label>Заголовок</label>
+      <input type="text" id="f-title">
+      <label>Текст</label>
+      <textarea id="f-body" rows="8"></textarea>
+      <label>От кого</label>
+      <input type="text" id="f-from">
+      <label>Кнопка благодарности</label>
+      <input type="text" id="f-thanksLabel">
+
+      <label>Почерк</label>
+      <div class="pill-group" id="handwritingPills">
+        <button type="button" class="pill" data-val="handwritten">Рукописный</button>
+        <button type="button" class="pill" data-val="serif">Антиква</button>
+        <button type="button" class="pill" data-val="simple">Простой</button>
+      </div>
+
+      <label>Язык</label>
+      <div class="pill-group" id="langPills">
+        <button type="button" class="pill" data-val="ru">Русский</button>
+        <button type="button" class="pill" data-val="uz">O'zbekcha</button>
+        <button type="button" class="pill" data-val="en">English</button>
+      </div>
+    </div>
+
+    <!-- Фотографии -->
+    <div class="card">
+      <h2>Фотографии</h2>
+      <p class="hint">До пяти снимков. Они лягут внутри письма, у каждого своя подпись.</p>
+      <div id="photoList"></div>
+      <button type="button" class="add-btn" id="addPhotoBtn">+ добавить фотографию</button>
+    </div>
+
+    <!-- Значения/подписи: меню действий -->
+    <div class="card">
+      <h2>Что предложим</h2>
+      <p class="hint">Пункты меню «Что будем делать?» — иконка, подпись и финальная фраза.</p>
+      <label style="margin-top:0">Заголовок меню</label>
+      <input type="text" id="f-menuTitle">
+      <div id="menuItemList"></div>
+      <button type="button" class="add-btn" id="addMenuItemBtn">+ добавить пункт</button>
+    </div>
+
+    <!-- Дата и время / игра с сердечками -->
+    <div class="card">
+      <h2>Экран с фильмом</h2>
+      <p class="hint">Мини-игра: нажимать на сердечко, пока не откроется фото. Число ниже — то, что покажется в тексте после игры (реальное число нажатий подбирается автоматически, чтобы было приятно играть).</p>
+      <div class="two-col">
+        <div><label>Сколько «сердец» показать в тексте</label><input type="number" id="f-heartsTarget" min="1"></div>
+        <div><label>Подпись под карточкой</label><input type="text" id="f-movieSubtitle"></div>
+      </div>
+      <label>Фото, которое проявится</label>
+      <input type="file" id="moviePhotoInput" accept="image/*">
+      <img id="moviePhotoThumb" class="thumb hidden" style="margin-top:10px;">
+    </div>
+
+    <!-- Прощальная картинка в самом конце -->
+    <div class="card">
+      <h2>Картинка в самом конце</h2>
+      <p class="hint">Плавно появляется, когда получатель долистает страницу до конца.</p>
+      <div class="toggle-row" style="border-top:none;">
+        <span>Показывать эту картинку</span>
+        <label class="switch"><input type="checkbox" id="f-farewellEnabled"><span class="track"></span></label>
+      </div>
+      <label>Файл</label>
+      <input type="file" id="farewellImageInput" accept="image/*">
+      <img id="farewellImageThumb" class="thumb hidden" style="margin-top:10px;">
+      <label>Подпись под картинкой</label>
+      <input type="text" id="f-farewellCaption" placeholder="например: до встречи ♡">
+    </div>
+
+    <div class="card">
+      <h2>Оформление</h2><p class="hint">Меняй настроение сайта, не ломая исходную композицию.</p>
+      <label style="margin-top:0">Тема сайта</label><select id="f-theme"><option value="original">Оригинальная</option><option value="date">Свидание</option><option value="romantic">Романтическая</option><option value="cozy">Тёплая встреча</option><option value="festive">Праздничная</option></select>
+      <label>Оформление меню выбора</label><select id="f-menuStyle"><option value="cards">Карточки</option><option value="pills">Большие кнопки</option><option value="glass">Стекло</option><option value="soft">Мягкие плитки</option></select>
+    </div>
+    <div class="card">
+      <h2>Ключ для входа</h2><p class="hint">Можно закрыть сам подарок отдельным ключом. Это не пароль админ-панели.</p>
+      <div class="toggle-row" style="border-top:none"><span>Запрашивать ключ при входе</span><label class="switch"><input type="checkbox" id="f-securityEnabled"><span class="track"></span></label></div>
+      <label>Текст над полем</label><input type="text" id="f-securityQuestion">
+      <label>Подсказка</label><input type="text" id="f-securityHint">
+      <label>Ключ</label><input type="text" id="f-securityPassword" placeholder="например: 2709">
+    </div>
+    <div class="card">
+      <h2>Музыка</h2><p class="hint">Загрузи свой аудиофайл. Автозапуск может быть заблокирован браузером — тогда музыка включится после первого касания.</p>
+      <div class="toggle-row" style="border-top:none"><span>Включить музыку</span><label class="switch"><input type="checkbox" id="f-musicEnabled"><span class="track"></span></label></div>
+      <label>Аудиофайл</label><input type="file" id="musicInput" accept="audio/*"><p class="hint" id="musicName"></p>
+      <label>Громкость: <span id="volumeValue">35%</span></label><input type="range" id="f-musicVolume" min="0" max="1" step="0.05">
+      <div class="toggle-row"><span>Пытаться запустить автоматически</span><label class="switch"><input type="checkbox" id="f-musicAutoplay"><span class="track"></span></label></div>
+    </div>
+    <!-- Ответы посетителей -->
+    <div class="card">
+      <h2>Ответы получателя</h2>
+      <p class="hint">То, что напишут в форме «написать пару слов в ответ», хранится на сервере и появляется здесь.</p>
+      <button type="button" class="add-btn" id="loadRepliesBtn">Показать ответы</button>
+      <div id="repliesList" class="replies-list"></div>
+    </div>
+
+    <!-- Настройки отображения -->
+    <div class="card">
+      <h2>Настройки отображения</h2>
+      <div class="toggle-row">
+        <span>Кнопка «Поделиться»</span>
+        <label class="switch"><input type="checkbox" id="f-allowShare"><span class="track"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>Кнопка «Написать пару слов в ответ»</span>
+        <label class="switch"><input type="checkbox" id="f-allowReply"><span class="track"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>Показывать подпись внизу страницы</span>
+        <label class="switch"><input type="checkbox" id="f-showBranding"><span class="track"></span></label>
+      </div>
+    </div>
+
+    <!-- Дополнительные параметры -->
+    <div class="card">
+      <h2>Дополнительные параметры</h2>
+      <label style="margin-top:0">Ссылка для кнопки «Поделиться»</label>
+      <input type="text" id="f-shareUrl" placeholder="оставь пустым, чтобы использовать адрес этой страницы">
+      <p class="hint" style="margin-top:10px;">Все данные хранятся на сервере (в файле data/data.json) — их видят все посетители сайта, на любом устройстве.</p>
+      <button type="button" class="add-btn" id="resetBtn">Сбросить всё к примеру по умолчанию</button>
+    </div>
+
+    <div class="save-bar">
+      <button type="button" class="save-main-btn" id="saveMainBtn">Сохранить</button>
+    </div>
+  </div>
+
+  <div class="preview-col">
+    <div class="live-label">живое превью ♡</div>
+    <div class="phone-frame"><iframe id="previewFrame" src="index.html"></iframe></div>
+    <div class="preview-controls">
+      <button type="button" class="refresh-btn" id="refreshPreviewBtn">Обновить превью</button>
+      <a href="index.html" target="_blank">открыть отдельно</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

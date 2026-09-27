@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Это тебе</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="access-gate hidden" id="accessGate">
+  <div class="access-card">
+    <div class="access-key">⌁</div><h1 id="accessQuestion">Введите ключ</h1>
+    <p id="accessHint" class="access-hint"></p>
+    <input id="accessInput" type="password" inputmode="text" autocomplete="off" placeholder="Ключ доступа">
+    <button class="btn btn-pink" id="accessBtn">Открыть подарок</button>
+    <p class="access-error hidden" id="accessError">Ключ не подошёл</p>
+  </div>
+</div>
+<audio id="giftAudio" loop preload="metadata"></audio>
+<button class="music-toggle hidden" id="musicToggle" type="button" aria-label="Музыка">♫</button>
+
+<div class="stage" id="stage">
+
+  <!-- Screen 1: intro -->
+  <section class="screen active" id="screen-intro">
+    <div class="intro-text">
+      <div class="intro-line1" id="introLine1">Для тебя,</div>
+      <div class="intro-line2" id="introLine2">небольшой подарок</div>
+    </div>
+    <div class="intro-hint">нажми, чтобы продолжить</div>
+  </section>
+
+  <!-- Screen 2: envelope -->
+  <section class="screen" id="screen-envelope">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="envelope-shadow-fold"></div>
+        <div class="envelope-body"></div>
+        <div class="envelope-name" id="envelopeName">Тебе</div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">✉</div>
+      </div>
+      <div class="envelope-hint" id="envelopeHint">нажми на конверт</div>
+    </div>
+  </section>
+
+  <!-- Screen 3: letter -->
+  <section class="screen" id="screen-letter">
+    <div class="letter-card">
+      <p class="letter-kicker" id="letterKicker">небольшой подарок, Тебе.</p>
+      <h1 class="letter-title" id="letterTitle">С днём рождения!</h1>
+      <p class="letter-body" id="letterBody"></p>
+
+      <div class="letter-photos" id="letterPhotos"></div>
+
+      <div class="letter-heart">♡</div>
+      <p class="letter-from" id="letterFrom">от близкого человека</p>
+
+      <div class="btn-row">
+        <button class="btn btn-pink" id="thanksBtn">Спасибо ♡</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screen 4: menu -->
+  <section class="screen" id="screen-menu">
+    <h2 class="menu-title" id="menuTitle">Что будем делать?</h2>
+    <div class="menu-list" id="menuList"></div>
+  </section>
+
+  <!-- Screen 5: movie / hearts -->
+  <section class="screen" id="screen-movie">
+
+    <div id="movieGame">
+      <div class="tap-photo-card" id="movieOrb">
+        <img id="moviePhotoImg" src="" alt="">
+        <div class="tap-photo-overlay"><span>♡</span><small id="movieTapHint">нажимай на фото</small></div>
+      </div>
+      <div class="movie-counter" id="movieCounter">0</div>
+    </div>
+
+    <div id="movieResult" class="hidden" style="width:100%;">
+      <div class="movie-final-photo normal-photo" id="movieFinalPhoto">
+        <img id="movieFinalPhotoImg" src="" alt="">
+      </div>
+
+      <div class="farewell-wrap hidden" id="farewellWrap">
+        <div class="farewell-reveal" id="farewellReveal">
+          <img class="farewell-img" id="farewellImg" src="" alt="">
+          <p class="farewell-caption" id="farewellCaption"></p>
+        </div>
+      </div>
+
+      <p class="movie-reveal-text" id="movieRevealText"></p>
+      <div class="movie-final-card">
+        <p class="movie-final-title" id="movieFinalTitle"></p>
+        <p class="movie-final-sub"><span id="movieFinalIcon">🎬</span><span id="movieFinalSub"></span></p>
+      </div>
+
+      <div class="movie-actions">
+        <button class="btn btn-pink" id="shareBtn">Поделиться</button>
+        <button class="btn btn-dark" id="saveBtn">Сохранить себе</button>
+        <button class="btn btn-dark" id="replyBtn">✈ Написать пару слов в ответ</button>
+      </div>
+      <div class="saved-note" id="savedNote">🕊 Улетело</div>
+
+      <div class="reply-box" id="replyBox">
+        <textarea id="replyText" maxlength="300" placeholder="напиши пару слов в ответ..."></textarea>
+        <div class="reply-meta">
+          <span class="reply-count"><span id="replyCount">0</span>/300</span>
+          <button class="btn btn-pink" id="replySendBtn" style="width:auto; padding:10px 20px;">Отправить</button>
+        </div>
+      </div>
+      <div class="sent-note" id="sentNote">🕊 Улетело</div>
+    </div>
+
+    <div id="brandFooter" class="brand-footer hidden">сделано с ♡</div>
+  </section>
+
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
